@@ -6,11 +6,16 @@ import { Task } from "./types";
 
 const Todo = () => {
 
+    // TODO:
+    // check if task exists function
+    // stop new task being created if task with === newTask.content has already been created
+    // use localStorage to maintain list between reloads?
+
     // State
     const [taskList, setTaskList] = useState<Task[]>([]);
     const [inputValue, setInputValue] = useState<string>('');
     
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleTaskSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         const newTask: Task = {
@@ -27,9 +32,10 @@ const Todo = () => {
     const AddTask = () => {
         return (
             <div className="AddToDo">
-                <h2>Add a task:</h2>
-                <Form onSubmit={(e) => handleSubmit(e)}>
-                    <input 
+                <label htmlFor="taskInput">Add a task:</label>
+                <Form onSubmit={(e) => handleTaskSubmit(e)}>
+                    <input
+                        id="taskInput"
                         name="input"
                         placeholder="Task..."
                         type="text"
@@ -48,45 +54,52 @@ const Todo = () => {
         );
     }
 
-    const deleteTask = (taskId: string) => {
-        const updatedTaskListed = taskList.filter((taskListItem) => taskListItem.id !== taskId);
-        setTaskList(updatedTaskListed);
+    const deleteTask = (taskToDelete: Task) => {
+        const updatedTaskList = taskList.filter((task) => task.id !== taskToDelete.id);
+
+        if (updatedTaskList.length === taskList.length) {
+            console.warn(`Failed to remove task from the list: ${taskToDelete.content}`);
+            return;
+        }
+
+        setTaskList(updatedTaskList);
     }
 
-    const handleCheckbox = (task: Task) => {
-        const updatedTaskList = taskList.map((taskListItem) => {
-            if (task.id === taskListItem.id) {
-                return {
-                    ...taskListItem,
-                    completed: !taskListItem.completed,
-                };
-            }
-            return taskListItem;
+    const handleCheckbox = (taskToCheck: Task) => {
+        setTaskList((prevTaskList) => {
+            return prevTaskList.map((task) => {
+                if (taskToCheck.id === task.id) {
+                    return {
+                        ...task,
+                        completed: !task.completed,
+                    };
+                }
+                return task;
+            });
         });
-        setTaskList(updatedTaskList);
     };
 
     const displayTasks = () => {
         let listItems: JSX.Element[] = [];
-        taskList.forEach((taskListItem) => {
+        taskList.forEach((task) => {
             listItems.push(
-                <Card key={taskListItem.id} color={taskListItem.completed ? "green" : "grey"} raised>
+                <Card key={task.id} color={task.completed ? "green" : "grey"} raised>
                     <Card.Content>
                         <Icon className="DeleteBtn"
-                            name="delete"
+                            name="trash"
                             color="red"
-                            onClick={() => deleteTask(taskListItem.id)}
+                            onClick={() => deleteTask(task)}
                         />
-                        <Card.Header className={taskListItem.completed ? "CompletedTask" : ""}>
-                            {taskListItem.content}
+                        <Card.Header className={task.completed ? "CompletedTask" : ""}>
+                            {task.content}
                         </Card.Header>
-                        <Card.Meta>Created at: {taskListItem.created_at.toUTCString().slice(17, -7)}</Card.Meta>
+                        <Card.Meta>Created at: {task.created_at.toUTCString().slice(17, -7)}</Card.Meta>
                         <Card.Description>
                             Completed: <input className="CompletedCheckbox"
                                 name="complete"
                                 type="checkbox"
-                                checked={taskListItem.completed}
-                                onChange={() => handleCheckbox(taskListItem)}
+                                checked={task.completed}
+                                onChange={() => handleCheckbox(task)}
                             />
                         </Card.Description>
                     </Card.Content>
