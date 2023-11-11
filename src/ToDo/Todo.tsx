@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import { useState } from "react";
 import { Form, Icon, Button, Card } from "semantic-ui-react";
 import "./Todo.css";
 import { v4 as uuidv4 } from "uuid";
@@ -8,18 +8,20 @@ const Todo = () => {
 
     // State
     const [taskList, setTaskList] = useState<Task[]>([]);
+    const [inputValue, setInputValue] = useState<string>('');
     
-    const handleSubmit = (e: any) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         const newTask: Task = {
             id: uuidv4(),
-            content: e.target.input.value,
+            content: inputValue,
             completed: false,
             created_at: new Date(),
         };
 
         if (newTask.content) setTaskList((taskList) => [...taskList, newTask]);
+        setInputValue('');
     }
 
     const AddTask = () => {
@@ -32,6 +34,9 @@ const Todo = () => {
                         placeholder="Task..."
                         type="text"
                         autoComplete="off"
+                        autoFocus={true}
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
                     />
                     <div className="AddToDoBtn">
                         <Button type="submit" primary>
@@ -100,7 +105,6 @@ const Todo = () => {
             </div>
         );
     };
-
 
     return (
         <>
