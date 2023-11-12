@@ -26,6 +26,10 @@
     width: 50vw;
 }
 
+.TaskAlreadyExists {
+    color: red;
+}
+
 .AddToDoBtn {
     padding-top: 1%;
     float: right;

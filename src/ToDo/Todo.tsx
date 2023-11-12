@@ -7,13 +7,13 @@ import { Task } from "./types";
 const Todo = () => {
 
     // TODO:
-    // check if task exists function
-    // stop new task being created if task with === newTask.content has already been created
+    // clear all tasks
     // use localStorage to maintain list between reloads?
 
     // State
     const [taskList, setTaskList] = useState<Task[]>([]);
-    const [inputValue, setInputValue] = useState<string>('');
+    const [inputValue, setInputValue] = useState('');
+    const [taskAlreadyExists, setTaskAlreadyExists] = useState(false);
     
     const handleTaskSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,7 +25,12 @@ const Todo = () => {
             created_at: new Date(),
         };
 
-        if (newTask.content) setTaskList((taskList) => [...taskList, newTask]);
+        if (newTask.content && !taskContentExists(newTask.content)) {
+            setTaskList((taskList) => [...taskList, newTask]);
+            if (taskAlreadyExists) setTaskAlreadyExists(false);
+        } else if (taskContentExists(newTask.content)) {
+            setTaskAlreadyExists(true);
+        }
         setInputValue('');
     }
 
@@ -44,6 +49,7 @@ const Todo = () => {
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                     />
+                    {taskAlreadyExists && <label className="TaskAlreadyExists">* Task already added</label>}
                     <div className="AddToDoBtn">
                         <Button type="submit" primary>
                             Add
@@ -77,6 +83,10 @@ const Todo = () => {
                 return task;
             });
         });
+    };
+
+    const taskContentExists = (newTaskContent: string) => {
+        return taskList.some((task) => task.content === newTaskContent);    
     };
 
     const displayTasks = () => {
