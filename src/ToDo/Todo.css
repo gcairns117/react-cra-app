@@ -45,6 +45,7 @@
 }
 
 .DeleteBtn {
+    padding-left: 2%;
     cursor: pointer;
     float: right;
 }
@@ -53,7 +54,13 @@
     cursor: pointer;
 }
 
-.CompletedTask {
+.TaskContent, .TaskContentComplete {
+    overflow-y: auto;
+    height: auto;
+    max-height: 100px;
+}
+
+.TaskContentComplete {
     text-decoration-line: line-through;
 }
 

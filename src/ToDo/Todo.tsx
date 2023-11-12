@@ -90,7 +90,7 @@ const Todo = () => {
                             color="red"
                             onClick={() => deleteTask(task)}
                         />
-                        <Card.Header className={task.completed ? "CompletedTask" : ""}>
+                        <Card.Header className={task.completed ? "TaskContentComplete" : "TaskContent"}>
                             {task.content}
                         </Card.Header>
                         <Card.Meta>Created at: {task.created_at.toUTCString().slice(17, -7)}</Card.Meta>
