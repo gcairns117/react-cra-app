@@ -7,7 +7,7 @@ import { Task } from "./types";
 const Todo = () => {
 
     // TODO:
-    // clear all tasks
+    // clear all tasks modal: are you sure?
     // use localStorage to maintain list between reloads?
 
     // State
@@ -55,6 +55,9 @@ const Todo = () => {
                             Add
                         </Button>
                     </div>
+                    <div className="DeleteAllTasksBtn">
+                        <DeleteAllTasksBtn />
+                    </div>
                 </Form>
             </div>
         );
@@ -70,6 +73,17 @@ const Todo = () => {
 
         setTaskList(updatedTaskList);
     }
+
+    const DeleteAllTasksBtn = () => {
+        return (
+            <Button
+                onClick={() => setTaskList([])}
+                negative
+            >
+                Delete All
+            </Button>
+        );
+    };
 
     const handleCheckbox = (taskToCheck: Task) => {
         setTaskList((prevTaskList) => {

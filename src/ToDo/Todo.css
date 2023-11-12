@@ -30,7 +30,7 @@
     color: red;
 }
 
-.AddToDoBtn {
+.AddToDoBtn, .DeleteAllTasksBtn {
     padding-top: 1%;
     float: right;
 }
