@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Header, Button, Icon } from "semantic-ui-react";
+import { Modal, Header, Button, Icon } from "semantic-ui-react"
 import { Task } from "../types"
 
 interface IDeleteAllTasks {
@@ -19,18 +19,17 @@ const DeleteAllTasksModal = (props: IDeleteAllTasks) => {
         >
             <Header icon='trash' color='red' content='Delete All Tasks' />
             <Modal.Content>
-                <p>
-                    Are you sure you wish to delete all tasks?
-                </p>
+                <p>Are you sure you wish to delete all tasks?</p>
             </Modal.Content>
             <Modal.Actions>
-                <Button basic color='red' onClick={() => setOpen(false)}>
+                <Button type='button' color='red' onClick={() => setOpen(false)}>
                     <Icon name='remove' /> No
                 </Button>
-                <Button color='green' onClick={() => {
-                    setOpen(false);
-                    setTaskList([]);
-                }}>
+                <Button type='submit' color='green' 
+                    onClick={() => {
+                        setOpen(false);
+                        setTaskList([]);
+                    }}>
                     <Icon name='checkmark' /> Yes
                 </Button>
             </Modal.Actions>

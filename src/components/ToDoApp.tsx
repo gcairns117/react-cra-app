@@ -8,13 +8,8 @@ import { TaskListContext } from "../Context";
 
 const ToDoApp = () => {
 
-    // TODO:
-    // use sessionStorage to maintain list between reloads?
-    
     // Context
-    const taskContext = useContext(TaskListContext)
-    const taskList = taskContext.taskList;
-    const setTaskList = taskContext.setTaskList;
+    const {taskList, setTaskList} = useContext(TaskListContext)
 
     // State
     const [inputValue, setInputValue] = useState('');
@@ -28,11 +23,11 @@ const ToDoApp = () => {
             id: uuidv4(),
             content: inputValue,
             completed: false,
-            created_at: new Date(),
+            created_at: new Date().toUTCString(),
         };
 
         if (newTask.content && !doesContentExist(newTask.content)) {
-            setTaskList((taskList) => [...taskList, newTask]);
+            setTaskList((prevTaskList) => [...prevTaskList, newTask]);
             if (taskAlreadyExists) setTaskAlreadyExists(false);
         } else if (doesContentExist(newTask.content)) {
             setTaskAlreadyExists(true);
@@ -72,6 +67,7 @@ const ToDoApp = () => {
     const DeleteAllTasksBtn = () => {
         return (
             <Button
+                type="button"
                 onClick={() => setDeleteAllModalOpen(true)}
                 negative
             >
@@ -123,7 +119,7 @@ const ToDoApp = () => {
                         <Card.Header className={task.completed ? "TaskContentComplete" : "TaskContent"}>
                             {task.content}
                         </Card.Header>
-                        <Card.Meta>Created at: {task.created_at.toUTCString().slice(17, -7)}</Card.Meta>
+                        <Card.Meta>Created at: {task.created_at.slice(17, -7)}</Card.Meta>
                         <Card.Description>
                             Completed: <input className="CompletedCheckbox"
                                 name="complete"
@@ -143,7 +139,7 @@ const ToDoApp = () => {
         return (
             <div className="Tasks">
                 <Card.Group centered stackable>
-                    {taskContext && displayTasks()}
+                    {taskList && displayTasks()}
                 </Card.Group>
             </div>
         );
