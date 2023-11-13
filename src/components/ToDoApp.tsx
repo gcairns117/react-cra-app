@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Form, Icon, Button, Card } from "semantic-ui-react";
 import "../App.css";
 import { v4 as uuidv4 } from "uuid";
 import { Task } from "../types";
 import DeleteAllTasksModal from "./DeleteAllTasksModal";
+import { TaskListContext } from "../Context";
 
-const Todo = () => {
+const ToDoApp = () => {
 
     // TODO:
     // use sessionStorage to maintain list between reloads?
+    
+    // Context
+    const taskContext = useContext(TaskListContext)
+    const taskList = taskContext.taskList;
+    const setTaskList = taskContext.setTaskList;
 
     // State
-    const [taskList, setTaskList] = useState<Task[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [taskAlreadyExists, setTaskAlreadyExists] = useState(false);
     const [deleteAllModalOpen, setDeleteAllModalOpen] = useState(false);
@@ -138,7 +143,7 @@ const Todo = () => {
         return (
             <div className="Tasks">
                 <Card.Group centered stackable>
-                    {taskList && displayTasks()}
+                    {taskContext && displayTasks()}
                 </Card.Group>
             </div>
         );
@@ -163,4 +168,4 @@ const Todo = () => {
     )
 }
 
-export default Todo;
+export default ToDoApp;
