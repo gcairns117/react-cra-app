@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { Form, Icon, Button, Card } from "semantic-ui-react";
-import "./Todo.css";
+import "../App.css";
 import { v4 as uuidv4 } from "uuid";
-import { Task } from "./types";
+import { Task } from "../types";
 import DeleteAllTasksModal from "./DeleteAllTasksModal";
 
 const Todo = () => {
 
     // TODO:
-    // clear all tasks modal: are you sure?
-    // use localStorage to maintain list between reloads?
+    // use sessionStorage to maintain list between reloads?
 
     // State
     const [taskList, setTaskList] = useState<Task[]>([]);
@@ -27,10 +26,10 @@ const Todo = () => {
             created_at: new Date(),
         };
 
-        if (newTask.content && !taskContentExists(newTask.content)) {
+        if (newTask.content && !doesContentExist(newTask.content)) {
             setTaskList((taskList) => [...taskList, newTask]);
             if (taskAlreadyExists) setTaskAlreadyExists(false);
-        } else if (taskContentExists(newTask.content)) {
+        } else if (doesContentExist(newTask.content)) {
             setTaskAlreadyExists(true);
         }
         setInputValue('');
@@ -65,17 +64,6 @@ const Todo = () => {
         );
     }
 
-    const deleteTask = (taskToDelete: Task) => {
-        const updatedTaskList = taskList.filter((task) => task.id !== taskToDelete.id);
-
-        if (updatedTaskList.length === taskList.length) {
-            console.warn(`Failed to remove task from the list: ${taskToDelete.content}`);
-            return;
-        }
-
-        setTaskList(updatedTaskList);
-    }
-
     const DeleteAllTasksBtn = () => {
         return (
             <Button
@@ -86,6 +74,17 @@ const Todo = () => {
             </Button>
         );
     };
+
+    const deleteTask = (taskToDelete: Task) => {
+        const updatedTaskList = taskList.filter((task) => task.id !== taskToDelete.id);
+
+        if (updatedTaskList.length === taskList.length) {
+            console.warn(`Failed to remove task from the list: ${taskToDelete.content}`);
+            return;
+        }
+
+        setTaskList(updatedTaskList);
+    }
 
     const handleCheckbox = (taskToCheck: Task) => {
         setTaskList((prevTaskList) => {
@@ -101,7 +100,7 @@ const Todo = () => {
         });
     };
 
-    const taskContentExists = (newTaskContent: string) => {
+    const doesContentExist = (newTaskContent: string) => {
         return taskList.some((task) => task.content === newTaskContent);    
     };
 

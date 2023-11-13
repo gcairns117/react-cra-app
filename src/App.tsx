@@ -1,5 +1,4 @@
-import './App.css';
-import Todo from './ToDo/Todo.tsx';
+import Todo from './components/Todo.tsx';
 
 const App = () => { 
 

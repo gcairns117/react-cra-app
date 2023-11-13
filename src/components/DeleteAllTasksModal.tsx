@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Header, Button, Icon } from "semantic-ui-react";
-import { Task } from "./types"
+import { Task } from "../types"
 
 interface IDeleteAllTasks {
     isOpen: boolean;
@@ -9,22 +9,22 @@ interface IDeleteAllTasks {
 }
 
 const DeleteAllTasksModal = (props: IDeleteAllTasks) => {
-    const {isOpen, setOpen, setTaskList} = props;
+    const { isOpen, setOpen, setTaskList } = props;
 
     return (
-        <Modal 
+        <Modal
             onClose={() => setOpen(false)}
             open={isOpen}
-            size='small'
+            size='large'
         >
-            <Header icon='trash' content='Delete All Messages' />
+            <Header icon='trash' color='red' content='Delete All Tasks' />
             <Modal.Content>
                 <p>
                     Are you sure you wish to delete all tasks?
                 </p>
             </Modal.Content>
             <Modal.Actions>
-            <Button basic color='red' onClick={() => setOpen(false)}>
+                <Button basic color='red' onClick={() => setOpen(false)}>
                     <Icon name='remove' /> No
                 </Button>
                 <Button color='green' onClick={() => {
