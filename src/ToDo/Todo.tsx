@@ -3,6 +3,7 @@ import { Form, Icon, Button, Card } from "semantic-ui-react";
 import "./Todo.css";
 import { v4 as uuidv4 } from "uuid";
 import { Task } from "./types";
+import DeleteAllTasksModal from "./DeleteAllTasksModal";
 
 const Todo = () => {
 
@@ -14,6 +15,7 @@ const Todo = () => {
     const [taskList, setTaskList] = useState<Task[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [taskAlreadyExists, setTaskAlreadyExists] = useState(false);
+    const [deleteAllModalOpen, setDeleteAllModalOpen] = useState(false);
     
     const handleTaskSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -77,7 +79,7 @@ const Todo = () => {
     const DeleteAllTasksBtn = () => {
         return (
             <Button
-                onClick={() => setTaskList([])}
+                onClick={() => setDeleteAllModalOpen(true)}
                 negative
             >
                 Delete All
@@ -146,6 +148,11 @@ const Todo = () => {
     return (
         <>
             <div className="ToDoApp">
+                <DeleteAllTasksModal
+                    isOpen={deleteAllModalOpen}
+                    setOpen={setDeleteAllModalOpen}
+                    setTaskList={setTaskList}
+                />
                 <div className="AddTask">
                     <AddTask />
                 </div>

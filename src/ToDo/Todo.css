@@ -61,7 +61,7 @@
 .TaskContent, .TaskContentComplete {
     overflow-y: auto;
     height: auto;
-    max-height: 100px;
+    max-height: 50px;
 }
 
 .TaskContentComplete {
