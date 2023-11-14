@@ -6,14 +6,19 @@ This is a self-study project.
 ## Stack
 - React.js
 - TypeScript (ES6)
+- Docker
 
-## Available Scripts
+## Run the app locally
 
-In the project directory, you can run:
+### Docker
 
-### `npm start`
+### npm
+From the root of the project directory, run:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### `npm install`
+Install dependencies 
+
+#### `npm start`
+Starts the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes. You may also see any lint errors in the console.

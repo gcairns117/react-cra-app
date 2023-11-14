@@ -4,11 +4,11 @@ import ToDoApp from './components/ToDoApp.tsx';
 import { TaskListContext } from "./Context.ts"
 
 const App = () => { 
-  // Retrieve the value from sessionStorage or use a default value
+  // Retrieves the taskList value from sessionStorage or uses an empty array as default value
   const storedTaskList = sessionStorage.getItem('taskList');
   const [taskList, setTaskList] = useState<Task[]>(storedTaskList ? JSON.parse(storedTaskList) : []);
 
-  // useEffect to update sessionStorage whenever myValue changes
+  // useEffect updates sessionStorage whenever taskList changes
   useEffect(() => {
     sessionStorage.setItem('taskList', JSON.stringify(taskList));
   }, [taskList]);
