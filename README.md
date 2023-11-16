@@ -13,13 +13,11 @@ This is a self-study project.
 ### Docker
 From the root of the project directory, run:
 ```
-docker compose up
+docker compose up -d
 ```
-Starts the app in the docker container. \
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Starts the app in the docker container. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-You can stop the container using Crtl+C in the current terminal, then run the next command to remove it. \
-Or stop & remove the container with one command by running the following in a new terminal:
+Stop the app and container:
 ```
 docker compose down
 ```
